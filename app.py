@@ -38,7 +38,6 @@ with ui.layout_columns():
         def penguinsgrid_df():
             return render.DataGrid(penguins_df, filters=False, selection_mode="row")
 
-
 #-----------------------
 # Define User Interface
 #------------------------   
@@ -83,12 +82,10 @@ with ui.sidebar(open="open"):
             href= "https://github.com/ClaytonSeabaughGH/cintel-02-data",
             target= "_blank")
 
-
 #----------------------------------------
 # Create Main layout for displaying plots
 #----------------------------------------
 
-    
 ui.page_opts(title="Clayton's Penguin Data", fillable=True)
 
 # Create interactive plotly plot
@@ -114,10 +111,8 @@ with ui.layout_columns():
     with ui.card():
         @render.plot(alt="Seaborn Histogram")
         def seaborn_plot():
-            filtered_df = penguins_df[
-                penguins_df["species"].isin(input.selected_species_list())]
             selected_attribute = input.selected_attribute()
-            ax=sns.histplot(data=filtered_df,x=selected_attribute,bins=input.seaborn_bin_count(),hue="species", multiple="stack")
+            ax=sns.histplot(data=filtered_data(),x=selected_attribute,bins=input.seaborn_bin_count(),hue="species", multiple="stack")
             ax.set_title("Seaborn Histogram")
             ax.set_xlabel(selected_attribute)
             ax.set_ylabel("Count")
@@ -164,4 +159,3 @@ with ui.card(full_screen=True):
 @reactive.calc
 def filtered_data():
     return penguins_df
-
