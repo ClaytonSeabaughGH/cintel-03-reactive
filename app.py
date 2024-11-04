@@ -5,7 +5,7 @@ from shinywidgets import render_plotly
 import palmerpenguins
 import seaborn as sns
 import matplotlib.pyplot as plt
-
+from shiny import reactive
 
 # Familiarize myself with the data
 
@@ -18,8 +18,10 @@ import matplotlib.pyplot as plt
 # - body_mass_g: body mass in grams
 # - sex: MALE or FEMALE
 
+#-------------------------------------------
 # Load data in with built in function
 penguins_df = palmerpenguins.load_penguins()
+#-------------------------------------------
 
 with ui.layout_columns():
     # Create Data Table
@@ -154,3 +156,12 @@ with ui.card(full_screen=True):
             title="Attriubte Distribution by Species",
             color="species")
         return fig
+
+# --------------------------------------------------------
+# Reactive calculations and effects
+# --------------------------------------------------------
+
+@reactive.calc
+def filtered_data():
+    return penguins_df
+
